@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Control de Stock – 2 Semanas</title>
+<style>
+  body { font-family: Arial; padding: 20px; }
+  table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+  th, td { border: 1px solid #000; padding: 6px; text-align: center; }
+  th { background-color: #eee; }
+</style>
+</head>
+<body>
+<h1>Control de Stock – 2 Semanas</h1>
+<p>Control diario del stock de un producto, con entradas los lunes, miércoles y viernes, y salidas todos los días.</p>
+
+<h2>Datos</h2>
+<p><strong>Stock inicial:</strong> 50 unidades</p>
+<p><strong>Entradas:</strong><br>
+Lunes: 70 unidades<br>
+Miércoles: 100 unidades<br>
+Viernes: 150 unidades</p>
+
+<p><strong>Salidas Semana 1:</strong> 36, 38, 75, 22, 49</p>
+<p><strong>Salidas Semana 2:</strong> 62, 126, 132, 0, 23</p>
+
+<h2>Tabla de Control Diario</h2>
+<table>
+<thead>
+<tr>
+  <th>Día</th>
+  <th>Entrada</th>
+  <th>Salida</th>
+  <th>Stock Final</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+<script>
+let stock = 50;
+const entradas = { "Lunes":70, "Martes":0, "Miércoles":100, "Jueves":0, "Viernes":150 };
+const dias = ["Lunes","Martes","Miércoles","Jueves","Viernes"]; 
+const semana1 = [36,38,75,22,49];
+const semana2 = [62,126,132,0,23];
+const tabla = document.querySelector("tbody");
+
+function procesarSemana(salidas, semana){
+  for(let i=0;i<5;i++){
+    const dia = dias[i] + " (Semana " + semana + ")";
+    const entrada = entradas[dias[i]];
+    stock += entrada;
+    const salida = Math.min(stock, salidas[i]);
+    stock -= salida;
+    const fila = `<tr><td>${dia}</td><td>${entrada}</td><td>${salida}</td><td>${stock}</td></tr>`;
+    tabla.innerHTML += fila;
+  }
+}
+
+procesarSemana(semana1, 1);
+procesarSemana(semana2, 2);
+</script>
+
+<h2>Resultado Final</h2>
+<p>Stock final luego de las dos semanas: <strong id="final"></strong> unidades</p>
+<script>
+document.getElementById('final').textContent = stock;
+</script>
+
+</body>
+</html>
